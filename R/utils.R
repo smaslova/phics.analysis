@@ -24,7 +24,7 @@ process.data <- function(data, variables, markers){
 
   #remove unwanted samples
   metadata = metadata[(is.na(metadata$Person)==FALSE),]
-  metadata = metadata[(metadata$Person=='P'),]
+  metadata = metadata[(metadata$Person=='P' & metadata$Age<396),]
   ids = metadata[metadata$ID %in% rownames(counts),]$ID %>% as.data.frame()
   colnames(ids) = c("ID")
 
@@ -35,7 +35,7 @@ process.data <- function(data, variables, markers){
   counts = dplyr::select(counts, -markers)
 
   #remove metadata columns not in variables
-  extra_variables = c('ID', 'PIN', 'Date', 'Age_group')
+  extra_variables = c('ID', 'PIN', 'Date', 'Age_group', 'Age_group2')
   all_variables = do.call(c, list(extra_variables, variables))
   metadata = dplyr::select(metadata, all_variables)
 

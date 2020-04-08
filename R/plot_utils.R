@@ -38,7 +38,7 @@ plot.data <- function(data, marker, variable){
   data_tmp <- data_tmp[selected,]
 
   #if variable is age, scale back up by 100
-  if(variable=="Age") variable="Age_group"
+  if(variable=="Age") variable="Age_group2"
 
   #create boxplot
   plot <- data_tmp %>% ggplot2::ggplot(aes_string(x=as.character(variable), y="y")) +
