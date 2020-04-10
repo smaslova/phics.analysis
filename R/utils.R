@@ -24,7 +24,7 @@ process.data <- function(data, variables, markers){
 
   #remove unwanted samples
   metadata = metadata[(is.na(metadata$Person)==FALSE),]
-  metadata = metadata[(metadata$Person=='P' & metadata$Age<396),]
+  metadata = metadata[(metadata$Person=='P' & metadata$Age<3.96),]
   ids = metadata[metadata$ID %in% rownames(counts),]$ID %>% as.data.frame()
   colnames(ids) = c("ID")
 
