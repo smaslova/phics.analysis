@@ -56,6 +56,8 @@ remove.markers <- function(panel, data){
 }
 
 run.analysis <- function(panel, variables){
+  print("Running analysis")
+  print(panel)
   #load data
   data = load.data(panel)
 
