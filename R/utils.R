@@ -46,7 +46,7 @@ remove.markers <- function(panel, data){
   if(panel=='bcell'){
     markers = colnames(data[[1]])[grepl('CD1c', colnames(data[[1]]))]}
   else if(panel=='tcell'){
-    markers = c('CD3+', 'CD3-circle', 'CD3+Tetramer', 'CD3+Tetramer+CD8-CD4-/CD3+Tetramer+CD25+', 'CD3+Tetramer+CD8-CD4-/CD3+Tetramer+PD1+', 'CD3+Tetramer+CD8+CD4-/CD3+Tetramer+CD25+', 'CD3+Tetramer+CD8-CD4+/CD3+Tetramer+PD1+', 'CD3+Tetramer+CD8-CD4+/CD3+Tetramer+CD25+')
+    markers = c('CD3+', 'CD3-circle', 'CD3+Tetramer', 'CD3+Tetramer+CD8-CD4-/CD3+Tetramer+CD25+', 'CD3+Tetramer+CD8-CD4-/CD3+Tetramer+PD1+', 'CD3+Tetramer+CD8+CD4-/CD3+Tetramer+CD25+', 'CD3+Tetramer+CD8-CD4+/CD3+Tetramer+PD1+', 'CD3+Tetramer+CD8-CD4+/CD3+Tetramer+CD25+', 'CD3+Tetramer+CD8-CD4-/CD3+Tetramer+PD1+')
   }
   else{
     markers = c('CD3+', 'Total NK', 'CD57+NKG2Chi', 'CD56hiCD16+/NKG2C+ (Total NK)/CD107a-',	'CD56hiCD16+/NKG2C+ (Total NK)/CD107a+', 'CD56hiCD16+/NKG2C+ (Total NK)/CD57-', 'CD56hiCD16+/NKG2C+ (Total NK)/CD57+', 'CD56hiCD16-/NKG2C+ (Total NK)/CD107a-', 'CD56hiCD16-/NKG2C+ (Total NK)/CD107a+')
