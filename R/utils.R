@@ -61,6 +61,7 @@ run.analysis <- function(panel, variables){
 
   #select which markers to remove:
   markers = remove.markers(panel, data)
+  print(markers)
 
   #prepare data; keep only primaries
   data = process.data(data, variables, markers)
