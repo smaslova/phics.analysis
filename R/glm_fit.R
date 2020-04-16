@@ -20,7 +20,6 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
     marker = rownames(counts[i,])
     marker = noquote(toString(marker))
     marker = gsub('/', "", marker, fixed = TRUE)
-    print(marker)
 
     data_tmp <- data.frame(y = as.numeric(counts[i, md$ID]), md)
     data_tmp <- data_tmp[!is.na(data_tmp$y),]
