@@ -20,6 +20,7 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
     marker = rownames(counts[i,])
     marker = noquote(toString(marker))
     marker = gsub('/', "", marker, fixed = TRUE)
+    print(marker)
 
     data_tmp <- data.frame(y = as.numeric(counts[i, md$ID]), md)
     data_tmp <- data_tmp[!is.na(data_tmp$y),]
@@ -48,6 +49,7 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
     summ_tmp <- summary(contr_tmp)
     pval <- summ_tmp$test$pvalues
 
+    results = list(pval, fit_tmp)
     return(pval)
   })
 
@@ -60,7 +62,12 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
   adjp <- apply(pvals, 2, p.adjust, method = "BH")
   colnames(adjp) <- paste0("adjp_",  variables)
 
-  return(list(pvals=pvals, adjp=adjp, formula = format(formula)))
+  #create matrix of coefficients
+  #coeff_val =
+  #rownames(coeff_val) <- rownames(counts)
+  #colnames(coeff_val) <- paste0("coeff_",  variables)
+
+  return(list(pvals=pvals, adjp=adjp, cformula = format(formula)))
 }
 
 
