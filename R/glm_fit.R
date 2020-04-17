@@ -57,8 +57,8 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
   results <- fit_binomial
 
   #get coefficients
-  coeff <- lapply(results, `[[`, 2)
-  coeff <- do.call(rbind, coeff)[,-1]
+  coeff1 <- lapply(results, `[[`, 2)
+  coeff <- do.call(rbind, coeff1)[,-1]
   colnames(coeff) <- paste0("coeff_", colnames(coeff))
   rownames(coeff) <- rownames(counts)
 
@@ -72,9 +72,7 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
   adjp <- apply(pvals, 2, p.adjust, method = "BH")
   colnames(adjp) <- paste0("adjp_", variables)
 
-  return(list(pvals = pvals, adjp = adjp, coeff=coeff))
-
-  return(list(pvals=pvals, adjp=adjp, coeff=coeff, cformula = format(formula)))
+  return(list(pvals=pvals, adjp=adjp, coeff=coeff, formula = format(formula)))
 }
 
 
