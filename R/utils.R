@@ -90,7 +90,7 @@ save.results <- function(results, directory){
 
   #save p-values to excel file
   pvals_out = merge(results$pvals, results$adjp, by="row.names",all.x=TRUE)
-  #pvals_out = merge(pvals_out, results$coeff, by="row.names",all.x=TRUE)
+  pvals_out = merge(pvals_out, results$coeff, by="row.names",all.x=TRUE)
   write.file(pvals_out, results$formula, filepath)
 
   #save plots

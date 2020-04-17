@@ -4,9 +4,9 @@ perform.fit <- function(data, variables){
   colnames(counts) <- rownames(data$counts)
   rownames(counts) <- colnames(data$counts)
 
-  pvals = differential_abbundance(counts, data$parent_counts, data$metadata, variables)
+  results = differential_abbundance(counts, data$parent_counts, data$metadata, variables)
 
-  return(pvals)
+  return(results)
 }
 
 
@@ -36,6 +36,7 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
     fit_tmp <- glmer(formula, weights=weights, family=binomial(link = "logit"), data = data_tmp,
                      control=glmerControl(optimizer="bobyqa", nAGQ=1, optCtrl=list(maxfun=2e8)))
 
+    coeff_val = fixef(fit_tmp)
 
     #coefficients to test
     coeff = names(fixef(fit_tmp))
@@ -49,25 +50,31 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
     summ_tmp <- summary(contr_tmp)
     pval <- summ_tmp$test$pvalues
 
-    results = list(pval, fit_tmp)
-    return(pval)
+    results = list(pval, coeff_val)
+    return(results)
   })
 
-  #compute p-values
-  pvals <- do.call(rbind, fit_binomial)
-  colnames(pvals) <- paste0("pval_", variables)
+  results <- fit_binomial
+
+  #get coefficients
+  coeff <- lapply(results, `[[`, 2)
+  coeff <- do.call(rbind, coeff)[,-1]
+  colnames(coeff) <- paste0("coeff_", colnames(coeff))
+  rownames(coeff) <- rownames(counts)
+
+
+  #get p-values
+  pvals <- do.call(rbind, lapply(results, `[[`, 1))
+  colnames(pvals) <- paste0("pval_", contrast_names)
   rownames(pvals) <- rownames(counts)
 
   ## Adjust the p-values
   adjp <- apply(pvals, 2, p.adjust, method = "BH")
-  colnames(adjp) <- paste0("adjp_",  variables)
+  colnames(adjp) <- paste0("adjp_", contrast_names)
 
-  #create matrix of coefficients
-  #coeff_val =
-  #rownames(coeff_val) <- rownames(counts)
-  #colnames(coeff_val) <- paste0("coeff_",  variables)
+  return(list(pvals = pvals, adjp = adjp, coeff=coeff))
 
-  return(list(pvals=pvals, adjp=adjp, cformula = format(formula)))
+  return(list(pvals=pvals, adjp=adjp, coeff=coeff, cformula = format(formula)))
 }
 
 
