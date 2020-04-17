@@ -100,7 +100,7 @@ write.file <- function(pvals, formula, filepath){
   out_file = paste(filepath, "1pvalues.csv", sep="/")
   line1 = paste("Formula: ", formula, "\n", "\n")
   cat(line1, file=out_file)
-  write.table(pvals, out_file, sep=",", append=TRUE, row.names=FALSE)
+  write.table(pvals, out_file, sep=",", append=TRUE, row.names=TRUE, col.names=NA)
 }
 
 
