@@ -65,12 +65,12 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
 
   #get p-values
   pvals <- do.call(rbind, lapply(results, `[[`, 1))
-  colnames(pvals) <- paste0("pval_", contrast_names)
+  colnames(pvals) <- paste0("pval_", variables)
   rownames(pvals) <- rownames(counts)
 
   ## Adjust the p-values
   adjp <- apply(pvals, 2, p.adjust, method = "BH")
-  colnames(adjp) <- paste0("adjp_", contrast_names)
+  colnames(adjp) <- paste0("adjp_", variables)
 
   return(list(pvals = pvals, adjp = adjp, coeff=coeff))
 
