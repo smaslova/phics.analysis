@@ -1,7 +1,7 @@
 
 create.plots <- function(data, pvals, fdr){
   #list to store plots
-  plots = list(sum(pvals < 0.05))
+  plots = list(sum(pvals <= 1))
 
   for(i in 1:nrow(pvals)){
     marker = rownames(pvals)[i]
