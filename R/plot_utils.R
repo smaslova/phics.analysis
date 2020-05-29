@@ -1,6 +1,7 @@
 
 create.plots <- function(data, pvals, fdr){
   #list to store plots
+  fdr = 1
   plots = list(sum(pvals <= 1))
 
   for(i in 1:nrow(pvals)){
