@@ -89,7 +89,7 @@ save.results <- function(results, directory){
   dir.create(filepath)
 
   #save p-values to excel file
-  pvals_out = cbind(results$pvals, results$adjp, results$coeff)
+  pvals_out = cbind(results$pvals, results$adjp, results$coeff, results$rsquared)
   write.file(pvals_out, results$formula, filepath)
 
   #save plots

@@ -49,7 +49,10 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
     summ_tmp <- summary(contr_tmp)
     pval <- summ_tmp$test$pvalues
 
-    results = list(pval, coeff_val)
+    #r squared
+    r2 = summ_tmp$r.squared
+
+    results = list(pval, coeff_val, r2)
     return(results)
   })
 
@@ -61,6 +64,11 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
   colnames(coeff) <- paste0("coeff_", colnames(coeff))
   rownames(coeff) <- rownames(counts)
 
+  #get rsquared values
+  rsquared1 <- lapply(results, `[[`, 3)
+  r2 <- do.call(rsquared1, coeff1)[,-1]
+  colnames(r2) <- paste0("r2_", variables)
+  rownames(r2) <- rownames(counts)
 
   #get p-values
   pvals <- do.call(rbind, lapply(results, `[[`, 1))
@@ -71,7 +79,7 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
   adjp <- apply(pvals, 2, p.adjust, method = "BH")
   colnames(adjp) <- paste0("adjp_", variables)
 
-  return(list(pvals=pvals, adjp=adjp, coeff=coeff, formula = format(formula)))
+  return(list(pvals=pvals, adjp=adjp, coeff=coeff, rsquared=r2, formula = format(formula)))
 }
 
 
