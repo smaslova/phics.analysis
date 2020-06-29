@@ -66,7 +66,7 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
 
   #get rsquared values
   rsquared1 <- lapply(results, `[[`, 3)
-  r2 <- do.call(rsquared1, coeff1)[,-1]
+  r2 <- do.call(rbind, rsquared1)[,-1]
   colnames(r2) <- paste0("r2_", variables)
   rownames(r2) <- rownames(counts)
 
