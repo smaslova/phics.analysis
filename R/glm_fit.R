@@ -51,6 +51,7 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
 
     #r squared
     print(str(summ_tmp))
+    print(summ_tmp)
     r2 = summ_tmp$r.squared
 
     results = list(pval, coeff_val, r2)
