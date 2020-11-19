@@ -59,12 +59,15 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
   })
 
   results <- fit_binomial
+  print("Results:")
+  print(results)
 
   #get coefficients
   coeff1 <- lapply(results, `[[`, 2)
   coeff <- do.call(rbind, coeff1)[,-1]
   colnames(coeff) <- paste0("coeff_", colnames(coeff))
   rownames(coeff) <- rownames(counts)
+
 
   #get rsquared values
   print("Computing R-squared values:")
