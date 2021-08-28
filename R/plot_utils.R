@@ -60,7 +60,7 @@ plot.data <- function(data, marker, variable){
 save.plots <- function(plots, filepath){
   sig_names = names(plots)
   for(name in sig_names){
-    name = sub("/", "_", name)
+    name = gsub("/", "_", name)
     file=paste(filepath, "/", name, ".pdf", sep="")
     ggsave(file, plots[[name]])
   }

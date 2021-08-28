@@ -50,33 +50,35 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
     pval <- summ_tmp$test$pvalues
 
     #r squared
-    print(str(summ_tmp))
-    print(summ_tmp)
-    r2 = summ_tmp$r.squared
+    #print("R2:")
+    #r2 = summ_tmp$r.squared
+    #print(str(summ_tmp))
 
-    results = list(pval, coeff_val, r2)
+    results = list(pval, coeff_val)
     return(results)
   })
 
   results <- fit_binomial
-  print("Results:")
-  print(results)
+  #print("Results:")
+  #print(length(results))
 
   #get coefficients
   coeff1 <- lapply(results, `[[`, 2)
   coeff <- do.call(rbind, coeff1)[,-1]
   colnames(coeff) <- paste0("coeff_", colnames(coeff))
   rownames(coeff) <- rownames(counts)
+  #print("Coefficients:")
+  #print(coeff)
 
 
   #get rsquared values
-  print("Computing R-squared values:")
-  rsquared1 <- lapply(results, `[[`, 3)
-  r2 <- do.call(rbind, rsquared1)[,-1]
+  #print("Computing R-squared values:")
+  #rsquared1 <- lapply(results, `[[`, 3)
+  #r2 <- do.call(rbind, rsquared1)[,-1]
 
-  print(r2)
-  colnames(r2) <- paste0("R-squared")
-  rownames(r2) <- rownames(counts)
+  #colnames(r2) <- paste0("R-squared")
+  #rownames(r2) <- rownames(counts)
+
 
   #get p-values
   pvals <- do.call(rbind, lapply(results, `[[`, 1))
@@ -87,7 +89,7 @@ differential_abbundance <- function(counts, parent_counts, md, variables){
   adjp <- apply(pvals, 2, p.adjust, method = "BH")
   colnames(adjp) <- paste0("adjp_", variables)
 
-  return(list(pvals=pvals, adjp=adjp, coeff=coeff, rsquared=r2, formula = format(formula)))
+  return(list(pvals=pvals, adjp=adjp, coeff=coeff, formula = format(formula))) # rsquared=r2,
 }
 
 

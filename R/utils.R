@@ -80,7 +80,8 @@ run.analysis <- function(panel, variables){
   results = c(results, plots=list(plots))
 
   results = c(results, panel=panel)
-  return(results)
+
+  return(list("results"=results, "data"=data))
 }
 
 save.results <- function(results, directory){

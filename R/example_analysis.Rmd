@@ -1,0 +1,115 @@
+---
+title: "Example"
+author: "Sasha Maslova"
+date: "April 7, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#check for required packages and install
+list.of.packages <- c("ggplot2", "tidyverse", "lme4", "multcomp", "dplyr", "magrittr", "devtools")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+library("ggplot2")
+library("tidyverse")
+library("multcomp")
+library("dplyr")
+library("magrittr")
+library("devtools")
+library("lme4")
+
+#install and load package for analyzing phics data
+#devtools::install_github('smaslova/phics.analysis')
+#library(phics.analysis)
+source("glm_fit.R")
+source("plot_utils.R")
+source("utils.R")
+```
+
+
+
+## Load data
+
+```{r}
+#define which panel you want to look at
+#options: bcell, tcell, nkcell
+panel = 'nkcell'
+
+#load data:
+data = load.data(panel)
+```
+
+You can look at the datasets by un-commenting:
+```{r}
+data$counts
+#data$metadata
+```
+
+
+## Run analysis
+
+```{r}
+#define which variables you would like to consider
+#options: "Sex", "Age", "HIV.Status", "Batch", "EBV.Infection","CMV.Infection","HHV6.Infection", "ORL_EBV", "PLS_EBV", "ORL_CMV", "PLS_CMV", "ORL_HHV6", "PLS_HHV6", "ORL_HSV", "PLS_HSV", "Age_group", "Age_group2"
+
+variables = c("Age", "Sex", "HIV.Status")
+```
+
+
+
+```{r}
+#compares given variables in primaries younger than 396 days only
+#cell proprotions where parent population is <50 cells are removed
+out = run.analysis(panel, variables)
+```
+
+
+## Look at results
+```{r}
+results = out$results
+data = out$data
+```
+
+```{r}
+#look at metadata
+metadata = data$metadata
+
+sum(metadata$HIV.Status =='HEU')
+sum(metadata$HIV.Status =='HUU')
+```
+
+
+```{r}
+#see the model that was fit to the data
+results$formula
+```
+
+```{r}
+#look at metadata of datapoints used in plots/ mixed linear model
+```
+
+
+```{r}
+#look at adjusted p-values for all cell populations tested
+#results$adjp
+```
+
+```{r}
+#view plots for all significant results
+#plots are created using ONLY data points used to fit the model
+show.plots(results$plots)
+```
+
+
+## Save results
+
+```{r}
+#define directory to save p-values and plots
+#it will be created in /results/panel/
+dirname = "test"
+save.results(results, dirname)
+```
+
